@@ -1,1 +1,1 @@
-# EmailReaderE2E
+# Retrieve Email content from Script
