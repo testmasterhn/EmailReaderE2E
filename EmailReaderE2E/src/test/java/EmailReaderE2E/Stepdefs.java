@@ -1,8 +1,8 @@
 package EmailReaderE2E;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import pageobjects.Subscripted;
 import pageobjects.Subscription;
 import cucumber.api.java.en.Then;
 import static org.junit.Assert.*;
@@ -10,7 +10,6 @@ import static org.junit.Assert.*;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -32,7 +31,7 @@ public class Stepdefs {
 		
 	}
 
-	@When("^I provide the valid email and it isn't to be used before$")
+	@When("^I provide the valid email and it is not to be used before$")
 	public void i_provide_the_valid_email_and_it_isn_t_to_be_used_before() throws Exception {
 		Utility.scrolled_element_into_view(this.driver, this.subscriptionPage.txtSubscriberEmail);
 		this.subscriptionPage.txtSubscriberEmail.sendKeys("mrt.testmailservice@gmail.com");
@@ -73,13 +72,17 @@ public class Stepdefs {
 		
 		String activationLink = Utility.getHref(emailContent);
 		if(!activationLink.isEmpty())
+		{
 			this.driver.get(activationLink);
+			this.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		}
 	}
 
 	@Then("^I should see the message \"([^\"]*)\"$")
-	public void i_should_see_the_message(String arg1) throws Exception {
-		// Write code here that turns the phrase above into concrete actions
-		Thread.sleep(10000);
+	public void i_should_see_the_message(String msg) throws Exception {
+		Subscripted subscriptedPage = new Subscripted(this.driver);
+		assertEquals(subscriptedPage.lbActivatedNotify.getText(), msg);
+		
 	}
 
 }
