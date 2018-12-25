@@ -23,7 +23,7 @@ public class MailReader {
 	public String password;
 
 	private Folder inbox;
-	private Message messages[];
+	public Message messages[];
 
 	public MailReader(String account, String password) {
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
